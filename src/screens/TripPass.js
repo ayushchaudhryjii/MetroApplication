@@ -106,7 +106,7 @@ const TripPass = ({ navigation }) => {
         </View>
         <View>
         <Text style={styles.textedit}>Fare</Text>
-        <Text style={styles.textedit1}>Rs 0</Text>
+        <Text style={styles.textedit1}>Rs 600</Text>
 
         </View>
       </View>
@@ -122,7 +122,13 @@ const TripPass = ({ navigation }) => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onPress={() => navigation.navigate("Ticket")}
+        onPress={() => {
+          if (!source || !destination) {
+            Alert.alert("Please select both source and destination.");
+          } else {
+            navigation.navigate("Ticket");
+          }
+        }}
       >
         <Text
           style={{ color: Color.WHITE_COLOR, fontSize: 18, fontWeight: "600" }}

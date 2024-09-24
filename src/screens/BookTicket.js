@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity ,Button, FlatList, Modal, Alert, StyleSheet} from "react-native";
+import { View, Text, Image, TouchableOpacity, Button, FlatList, Modal, Alert, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import Color from "../common/Color";
 
@@ -10,11 +10,13 @@ const BookTicket = ({ navigation }) => {
   const [isDestinationModalVisible, setDestinationModalVisible] = useState(false);
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
-  const locations = ['Versova', 'DN Nagar', 'Azad Nagar', 'Andheri','Western Express','Chakala JB Nagar','Airport Road','Marol Naka','Saki Naka','Asalpha','Jagruti Nagar','Ghatkoper'];
+  const locations = ['Versova', 'DN Nagar', 'Azad Nagar', 'Andheri', 'Western Express', 'Chakala JB Nagar', 'Airport Road', 'Marol Naka', 'Saki Naka', 'Asalpha', 'Jagruti Nagar', 'Ghatkoper'];
+
   const handleSelectSource = (item) => {
     setSource(item);
     setSourceModalVisible(false);
   };
+
   const handleSelectDestination = (item) => {
     setDestination(item);
     setDestinationModalVisible(false);
@@ -23,133 +25,112 @@ const BookTicket = ({ navigation }) => {
   let total = price * count;
 
   const handleDecrement = () => {
-    setCount(count - 1);
+    if (count > 1) setCount(count - 1);
   };
+
   const handleIncrement = () => {
     setCount(count + 1);
   };
+
   return (
     <View style={{ backgroundColor: Color.WHITE_COLOR, flex: 1 }}>
-      <View
-        style={{
-          borderColor: Color.CARD_COLOR,
-          margin: 20,
-          borderWidth: 0.2,
-          height: 280,
-          borderRadius: 5,
-        }}
-      >
-        <Text
-          style={{
-            color: Color.BORDER_COLOR,
-            fontSize: 16,
-            fontWeight: "700",
-            marginLeft: 20,
-            marginBottom: 5,
-            marginTop: 10,
-          }}
-        >
+      <View style={{
+        borderColor: Color.CARD_COLOR,
+        margin: 20,
+        borderWidth: 0.2,
+        height: 280,
+        borderRadius: 5,
+      }}>
+        <Text style={{
+          color: Color.BORDER_COLOR,
+          fontSize: 16,
+          fontWeight: "700",
+          marginLeft: 20,
+          marginBottom: 5,
+          marginTop: 10,
+        }}>
           Source
         </Text>
-          {/* Source Dropdown */}
-      <TouchableOpacity style={styles.inputField} onPress={() => setSourceModalVisible(true)}>
-        <Text style={styles.text}>{source ? source : 'Select Source'}</Text>
+        {/* Source Dropdown */}
+        <TouchableOpacity style={styles.inputField} onPress={() => setSourceModalVisible(true)}>
+          <Text style={styles.text}>{source ? source : 'Select Source'}</Text>
+        </TouchableOpacity>
         
-      </TouchableOpacity>
-        <Text
-          style={{
-            color: Color.BORDER_COLOR,
-            fontSize: 16,
-            fontWeight: "700",
-            marginLeft: 20,
-            marginBottom: 5,
-            marginTop: 10,
-          }}
-        >
+        <Text style={{
+          color: Color.BORDER_COLOR,
+          fontSize: 16,
+          fontWeight: "700",
+          marginLeft: 20,
+          marginBottom: 5,
+          marginTop: 10,
+        }}>
           Destination
         </Text>
         {/* Destination Dropdown */}
-      <TouchableOpacity style={styles.inputField} onPress={() => setDestinationModalVisible(true)}>
-        <Text style={styles.text}>{destination ? destination : 'Select Destination'}</Text>
-        
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.inputField} onPress={() => setDestinationModalVisible(true)}>
+          <Text style={styles.text}>{destination ? destination : 'Select Destination'}</Text>
+        </TouchableOpacity>
 
         {/* Modal for Source Selection */}
         <Modal visible={isSourceModalVisible} transparent={true} animationType="slide">
-        <View style={styles.modalContainer}>
-          <FlatList
-            data={locations}
-            keyExtractor={(item) => item}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.listItem} onPress={() => handleSelectSource(item)}>
-                <Text style={styles.listItemText}>{item}</Text>
-              </TouchableOpacity>
-            )}
-          />
-          <Button title="Close" style={{color:Color.BLACK_COLOR}} onPress={() => setSourceModalVisible(false)} />
-        </View>
-      </Modal>
+          <View style={styles.modalContainer}>
+            <FlatList
+              data={locations}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <TouchableOpacity style={styles.listItem} onPress={() => handleSelectSource(item)}>
+                  <Text style={styles.listItemText}>{item}</Text>
+                </TouchableOpacity>
+              )}
+            />
+            <Button title="Close" onPress={() => setSourceModalVisible(false)} />
+          </View>
+        </Modal>
 
-      {/* Modal for Destination Selection */}
-      <Modal visible={isDestinationModalVisible} transparent={true} animationType="slide">
-        <View style={styles.modalContainer}>
-          <FlatList
-            data={locations}
-            keyExtractor={(item) => item}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.listItem} onPress={() => handleSelectDestination(item)}>
-                <Text style={styles.listItemText}>{item}</Text>
-              </TouchableOpacity>
-            )}
-          />
-          <Button title="Close"  onPress={() => setDestinationModalVisible(false)} />
-        </View>
-      </Modal>
-        <View style={{ flexDirection: "row",justifyContent:"space-between" }}>
+        {/* Modal for Destination Selection */}
+        <Modal visible={isDestinationModalVisible} transparent={true} animationType="slide">
+          <View style={styles.modalContainer}>
+            <FlatList
+              data={locations}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <TouchableOpacity style={styles.listItem} onPress={() => handleSelectDestination(item)}>
+                  <Text style={styles.listItemText}>{item}</Text>
+                </TouchableOpacity>
+              )}
+            />
+            <Button title="Close" onPress={() => setDestinationModalVisible(false)} />
+          </View>
+        </Modal>
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", margin: 20, gap: 16 }}>
-            <TouchableOpacity
-              onPress={() => {
-                setPrice(20);
-                setSelectedOption("single");
-              }}
-            >
+            <TouchableOpacity onPress={() => {
+              setPrice(20);
+              setSelectedOption("single");
+            }}>
               <Image
-                source={
-                  selectedOption === "single"
-                    ? require("../images/radioclick.png")
-                    : require("../images/radiounclick.png")
-                }
+                source={selectedOption === "single" ? require("../images/radioclick.png") : require("../images/radiounclick.png")}
                 resizeMode="contain"
                 style={{ height: 40, width: 40 }}
               />
               <Text style={{ fontWeight: "600" }}>Single</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => {
-                setPrice(40);
-                setSelectedOption("return");
-              }}
-            >
+            <TouchableOpacity onPress={() => {
+              setPrice(40);
+              setSelectedOption("return");
+            }}>
               <Image
-                source={
-                  selectedOption === "return"
-                    ? require("../images/radioclick.png")
-                    : require("../images/radiounclick.png")
-                }
+                source={selectedOption === "return" ? require("../images/radioclick.png") : require("../images/radiounclick.png")}
                 resizeMode="contain"
                 style={{ height: 40, width: 40 }}
               />
               <Text style={{ fontWeight: "600" }}>Return</Text>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              margin: 30,
-              gap: 16,
-            }}
-          >
+
+          <View style={{ flexDirection: "row", margin: 30, gap: 16 }}>
             <TouchableOpacity
               style={{
                 borderColor: Color.BLACK_COLOR,
@@ -160,7 +141,7 @@ const BookTicket = ({ navigation }) => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={() => handleDecrement()}
+              onPress={handleDecrement}
             >
               <Text style={{ fontSize: 20, fontWeight: "700" }}>-</Text>
             </TouchableOpacity>
@@ -177,58 +158,52 @@ const BookTicket = ({ navigation }) => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={() => handleIncrement()}
+              onPress={handleIncrement}
             >
               <Text style={{ fontSize: 20, fontWeight: "700" }}>+</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-      <View
-        style={{
-          borderColor: Color.CARD_COLOR,
-          margin: 20,
-          borderWidth: 0.2,
-          height: 180,
-          borderRadius: 5,
-        }}
-      >
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 15,
-            gap: 5,
-          }}
-        >
+
+      <View style={{
+        borderColor: Color.CARD_COLOR,
+        margin: 20,
+        borderWidth: 0.2,
+        height: 180,
+        borderRadius: 5,
+      }}>
+        <View style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 15,
+          gap: 5,
+        }}>
           <Text style={{ fontSize: 18, fontWeight: "600" }}>
             You have to pay
           </Text>
           <Text style={{ fontSize: 18, fontWeight: "600" }}>Rs {total}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            margin:15,
-            justifyContent:"space-between",
-          }}
-        >
+        <View style={{
+          flexDirection: "row",
+          margin: 15,
+          justifyContent: "space-between",
+        }}>
           <Text style={{ fontSize: 18, fontWeight: "600" }}>Passengers</Text>
           <Text style={{ fontSize: 18, fontWeight: "600" }}>{count}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            margin:15,
-            justifyContent:"space-between",
-          }}
-        >
+        <View style={{
+          flexDirection: "row",
+          margin: 15,
+          justifyContent: "space-between",
+        }}>
           <Text style={{ fontSize: 18, fontWeight: "600" }}>Total Fare</Text>
           <Text style={{ fontSize: 18, fontWeight: "600" }}>
             Rs {price} * {count} = {total}
           </Text>
         </View>
       </View>
+
       <TouchableOpacity
         style={{
           backgroundColor: Color.HEADER_COLOR,
@@ -240,11 +215,15 @@ const BookTicket = ({ navigation }) => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onPress={() => navigation.navigate("Ticket")}
+        onPress={() => {
+          if (!source || !destination) {
+            Alert.alert("Please select both source and destination.");
+          } else {
+            navigation.navigate("Ticket");
+          }
+        }}
       >
-        <Text
-          style={{ color: Color.WHITE_COLOR, fontSize: 18, fontWeight: "600" }}
-        >
+        <Text style={{ color: Color.WHITE_COLOR, fontSize: 18, fontWeight: "600" }}>
           Generate QR Ticket
         </Text>
       </TouchableOpacity>
@@ -263,12 +242,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,
-    margin:15
+    margin: 15
   },
   text: {
     fontSize: 16,
-     color:"#727171",
-    fontWeight:"500"
+    color: "#727171",
+    fontWeight: "500"
   },
   row: {
     flexDirection: 'row',
@@ -306,7 +285,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,0.5)',
     padding: 40,
-
   },
   listItem: {
     padding: 20,
@@ -316,6 +294,6 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 16,
-    fontWeight:"600"
+    fontWeight: "600"
   },
 });
